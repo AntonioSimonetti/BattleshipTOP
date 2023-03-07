@@ -1,0 +1,23 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "build": "webpack build",
+    "build:watch": "webpack build --watch",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cli": "^1.0.1",
+    "css-loader": "^6.7.3",
+    "jest": "^29.4.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
