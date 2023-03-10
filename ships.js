@@ -3,16 +3,20 @@ module.exports = {  Ship };
 
   function Ship(length) {
     const hits = new Array(length).fill(false);
+    const isVertical = true;
   
-    function hit(position) {
-      if (position >= 0 && position < length) {
-        hits[position] = true;
-        return true;
+    function hit() {   //this will working if I will not allow the player to attack a position already attacked
+      for (let i = 0; i < hits.length; i++) {
+        if (!hits[i]) {
+          hits[i] = true
+          break
+        }
       }
-      return false;
     }
+    
   
     function isSunk() {
+      //console.log(`isSunk: ${JSON.stringify(hits)}`);
       return hits.every(hit => hit === true);
     }
   
@@ -20,7 +24,8 @@ module.exports = {  Ship };
       length,
       hits,
       hit,
-      isSunk
+      isSunk,
+      isVertical
     };
   }
 

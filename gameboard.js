@@ -50,14 +50,37 @@ let gameboardFactory = () => {
         }
         return false;
       };
-       
-       return { board, placeShip };
+
+      let missedShots = [];
+
+      function receiveAttack(row, col) { //this will working if I will not allow the player to attack a position already attacked
+        if (board[row][col] === null) {
+          missedShots.push({ row, col });
+        } else {
+          for (let i = 0; i < ships.length; i++) {
+            const ship = ships[i];
+            if (board[row][col] === ship) {
+              ship.hit();
+              if (ship.isSunk()) {
+              }
+              break;
+            }
+          }
+        }
+      }
+      
+      function allShipSunk() {      
+        for (let i = 0; i < ships.length; i++) {
+          if (!ships[i].isSunk()) {
+            return false;
+          }
+        }
+      
+        return true;
+      }
+
+      
+       return { board, placeShip, receiveAttack, ships, missedShots, allShipSunk };
      };
 
 module.exports = {  gameboardFactory };
-
-//TO DO:
-// 1 - funzione pubblica receiveAttack , 
-// 2 - board track of missing attacks,
-// 3 - public function allShipSunk,
-// 4 - decidere dove mettere isVertical ed implementarlo (dentro ships.js?) e testare il posizionamento anche orizzontale
