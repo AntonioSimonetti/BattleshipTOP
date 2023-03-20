@@ -1,3 +1,6 @@
 import "./style.css";
 
-console.log("ciao2")
+const { createGrid } = require("./display.js");
+const { gameloop } = require("./gameloop.js");
+
+createGrid();

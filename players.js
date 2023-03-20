@@ -1,6 +1,5 @@
-const { Ship }  = require('./ships');
-const { gameboardFactory }  = require('./gameboard');
-
+const { Ship } = require("./ships");
+const { gameboardFactory } = require("./gameboard");
 
 function Player(name, isComputer = false) {
   const gameboard = gameboardFactory();
@@ -17,10 +16,11 @@ function Player(name, isComputer = false) {
           row = Math.floor(Math.random() * gameboard.board.length);
           col = Math.floor(Math.random() * gameboard.board.length);
         } while (attackedPositions.includes(`${row},${col}`));
-              
+
         gameboard.receiveAttack(row, col);
         attackedPositions.push(`${row},${col}`);
-      }
+        return [row, col]; //not sure about this yet
+      },
     };
   }
 
@@ -28,15 +28,17 @@ function Player(name, isComputer = false) {
     name,
     gameboard,
     attackedPositions,
-    takeTurn(row, col) { //This do not ensure that the player cannot choose an already attacked position.Handle this in the input part of the code and maybe modify this later.
+    takeTurn(row, col) {
+      //This do not ensure that the player cannot choose an already attacked position.Handle this in the input part of the code and maybe modify this later.
       if (attackedPositions.includes(`${row},${col}`)) {
         console.log(`Position (${row}, ${col}) has already been attacked!`);
         return;
       }
       gameboard.receiveAttack(row, col);
       attackedPositions.push(`${row},${col}`);
-    }
+      return [row, col];
+    },
   };
 }
 
-  module.exports = {  Player };
+module.exports = { Player };
