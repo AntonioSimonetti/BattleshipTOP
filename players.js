@@ -17,7 +17,7 @@ function Player(name, isComputer = false) {
           col = Math.floor(Math.random() * gameboard.board.length);
         } while (attackedPositions.includes(`${row},${col}`));
 
-        gameboard.receiveAttack(row, col);
+        //gameboard.receiveAttack(row, col);
         attackedPositions.push(`${row},${col}`);
         return [row, col]; //not sure about this yet
       },

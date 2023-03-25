@@ -40,14 +40,19 @@ let gameboardFactory = () => {
   };
 
   const placeShip = (row, col, size, isVertical) => {
+
     const newShip = Ship(size);
     ships.push(newShip);
     if (isVertical === true) {
+   
+
       //If isVertical is true it place the ship in a vertical consecutive way
-      for (let i = row; i < row + size; i++) {
+      for (let i = row; i < row + size; i++) {  
         board[i][col] = newShip;
       }
     } else {
+      console.log("you are using me else")
+
       for (let j = col; j < col + size; j++) {
         //If isVertical is false it place the ship in a horizontal consecutive way
         board[row][j] = newShip;
@@ -60,8 +65,15 @@ let gameboardFactory = () => {
   function receiveAttack(row, col) {
     //this will working if I will not allow the player to attack a position already attacked
     if (board[row][col] === null) {
+      console.log(board[row][col])
       missedShots.push({ row, col });
+      console.log(missedShots)
+      console.log("mancato");
     } else {
+      console.log("preso");
+      console.log("questa è la board colpita: " , board);
+      console.log(board[row][col])
+
       for (let i = 0; i < ships.length; i++) {
         const ship = ships[i];
         if (board[row][col] === ship) {
@@ -77,10 +89,11 @@ let gameboardFactory = () => {
   function allShipSunk() {
     for (let i = 0; i < ships.length; i++) {
       if (!ships[i].isSunk()) {
+        console.log("nope")
         return false;
       }
     }
-
+    console.log("yes")
     return true;
   }
 

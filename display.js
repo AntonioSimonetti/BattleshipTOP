@@ -1,6 +1,23 @@
-const { gameloop } = require("./gameloop");
+const { gameloop, getPlayerInput, turn } = require("./gameloop");
+
 
 function createGrid() {
+  const topContainer = document.createElement("div");
+  topContainer.classList.add("top-container");
+
+  //const startButton = document.createElement("startButton");
+  //startButton.classList.add("startButton");
+  //startButton.textContent = "START";
+
+  //topContainer.appendChild(startButton);
+  document.body.appendChild(topContainer)
+
+  const mainHeader = document.createElement("div");
+  mainHeader.classList.add("main-header");
+  mainHeader.setAttribute("id","mainHeader");
+  mainHeader.textContent = "Click on the grid to place a ship!"
+  topContainer.appendChild(mainHeader);
+
   // Create main container
   const mainContainer = document.createElement("div");
   mainContainer.classList.add("main-container");
@@ -21,13 +38,9 @@ function createGrid() {
       grid1Container.appendChild(gridItemOne);
 
       // Add click event listener to each grid item
-      gridItemOne.addEventListener("click", function (event) {
-        const row = event.target.dataset.row;
-        const col = event.target.dataset.col;
-        gameloop().getPlayerInput(row, col);
-        gameloop().playerOnePlacing();
-        console.log("test");
-      });
+      gridItemOne.addEventListener("click", getPlayerInput);
+
+
     }
   }
 
@@ -46,16 +59,14 @@ function createGrid() {
       grid2Container.appendChild(gridItemTwo);
 
       // Add click event listener to each grid item
-      gridItemTwo.addEventListener("click", function (event) {
-        const row = event.target.dataset.row;
-        const col = event.target.dataset.col;
-        gameloop().getPlayerInput(row, col);
-        console.log("test");
-      });
+      gridItemTwo.addEventListener("click", turn);
+
     }
   }
 }
 
+
 module.exports = {
   createGrid: createGrid,
 };
+
