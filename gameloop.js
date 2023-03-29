@@ -1,4 +1,3 @@
-const { gameboardFactory } = require("./gameboard");
 const { Player } = require("./players");
 
 let phases = 1;
@@ -17,7 +16,7 @@ function isValidPlacementUX(row, col, phases, isVertical) {
     } else {
       for (let i = row; i < row + phases; i++) {
         gridItemOne.forEach((item) => {
-          if (item.dataset.row == i && item.dataset.col == col && item.style.backgroundColor === "black") {
+          if (item.dataset.row == i && item.dataset.col == col && item.style.backgroundColor === "#A1A1AB") {
             validPlacement = false;
           }
         });
@@ -29,17 +28,15 @@ function isValidPlacementUX(row, col, phases, isVertical) {
     } else {
       for (let j = col; j < col + phases; j++) {
         gridItemOne.forEach((item) => {
-          if (item.dataset.row == row && item.dataset.col == j && item.style.backgroundColor === "black") {
+          if (item.dataset.row == row && item.dataset.col == j && item.style.backgroundColor === "#A1A1AB") {
             validPlacement = false;
           }
         });
       }
     }
   }
-
   return validPlacement;
 }
-
 
 function getPlayerInput(event) {
   // Get the row and column of the clicked cell
@@ -48,26 +45,21 @@ function getPlayerInput(event) {
   let isVertical = confirm("Do you want to place the ship vertically?");
 
   const isValidPlacementUXVAR = isValidPlacementUX(row, col, phases, isVertical);
-  console.log(isValidPlacementUXVAR);
-
   if (!isValidPlacementUXVAR) {
-    console.log("NOT VALID POSITION");
     let winnerHeader = document.getElementById("mainHeader");
     winnerHeader.textContent = `This is not a valid position, try again!`;
+    winnerHeader.style.fontSize = '0.8em';
     return;
   } 
-  
     placements.push(row,col,isVertical);
-    console.log(placements)
-
     if (isVertical) {
       for (let i = row; i < row + phases; i++) {
         let gridItemOne = document.querySelectorAll(".grid-item-grid1");
         if (gridItemOne.length > 0) {
           gridItemOne.forEach((item) => {
             if (item.dataset.row == i && item.dataset.col == col) {
-              item.style.backgroundColor = "black";
-              if (item.style.backgroundColor === "black") {
+              item.style.backgroundColor = "#A1A1AB"; 
+              if (item.style.backgroundColor === "##A1A1AB") {
                 item.removeEventListener("click", getPlayerInput);
               }
               
@@ -76,17 +68,13 @@ function getPlayerInput(event) {
         }
       }
     } else { 
-      console.log("col: ", col);
-      console.log(typeof col);
-      console.log("phases: ", phases);
       for (let j = col; j < col + phases; j++) {
-        console.log("j: ", j);
         let gridItemOne = document.querySelectorAll(".grid-item-grid1");
         if (gridItemOne.length > 0) {
           gridItemOne.forEach((item) => {
             if (item.dataset.row == row && item.dataset.col == j) {
-              item.style.backgroundColor = "black";
-              if (item.style.backgroundColor === "black") {
+              item.style.backgroundColor = "#A1A1AB";
+              if (item.style.backgroundColor === "#A1A1AB") {
                 item.removeEventListener("click", getPlayerInput);
               }      
             }
@@ -94,7 +82,6 @@ function getPlayerInput(event) {
         }
       }
     } 
-
 
     if (phases > 4) {
       //removes the eventlistener by cloning the element without the eventlistener and replacing the one that had it
@@ -135,12 +122,8 @@ function getPlayerInput(event) {
       });
     }
 
-    console.log("inizio attacco player 1");
     gameboardTwoArr[0].receiveAttack(row,col);
-    console.log("fine attacco  1");
-
     event.target.removeEventListener("click", turn);
-
     if (isHit) {
       let winnerHeader = document.getElementById("mainHeader");
       winnerHeader.textContent = `You hit the enemy ship, attack again!`;
@@ -156,16 +139,13 @@ function getPlayerInput(event) {
       }
       return;
     }
-
-    CPUturn();
-    
+    CPUturn(); 
   }
 
 
   function CPUturn () {
-    console.log("inizio attacco player 2");
-    console.log(playersName[1].name)
-
+    let winnerHeader = document.getElementById("mainHeader");
+    winnerHeader.textContent = `Enemy attacking..`;
     let winner = null;
 
     // Check if playerTwo has won, and end the game if they have
@@ -179,7 +159,6 @@ function getPlayerInput(event) {
     } 
 
     let attacks = playersName[1].takeTurn();
-    console.log(attacks)
     gameboardOneArr[0].receiveAttack(attacks[0], attacks[1]);
 
     // Highlight the cell that is receiving the attack and attack again if ship is hitted
@@ -189,7 +168,6 @@ function getPlayerInput(event) {
       if (item.dataset.row == attacks[0] && item.dataset.col == attacks[1] ) {
         item.classList.add("water");
       }
-      
       if(item.dataset.row == attacks[0] && item.dataset.col == attacks[1] && gameboardOneArr[0].board[attacks[0]][attacks[1]] != null) {
         item.classList.remove("water");
         item.classList.add("hitted");
@@ -197,10 +175,12 @@ function getPlayerInput(event) {
       }
     });
   } 
+  setTimeout(function() {
+    winnerHeader.textContent = `Your turn to attack`;
+  }, 1000);
 }  
 
 function gameloop() {
-  console.log("started gameloop")
   // Create two players
   const playerOne = Player("Player One", false);
   const playerTwo = Player("Player Two", true);
@@ -212,25 +192,15 @@ function gameloop() {
   let fasi = 0;
     // Player One places ship
     for(let i = 0; i < 5;i++) {
-
-      console.log("dentro il loop", fasi)
-      console.log(`Place your ship with length ${fasi + 1}`);
-      
-    
         let row = parseInt(placements[0]);
         let col = parseInt(placements[1]);
         let isVertical = placements[2];
         placements = placements.slice(3);
-    
-      
         gameboardOne.placeShip(row, col, fasi + 1, isVertical);
         fasi++;
-        console.table(gameboardOne.board);
     }
-  console.log("fuori dal loop")
 
   //Player Two places ships randomly
-  console.log(`It's ${playerTwo.name}'s turn to place ships.`);
   for (let i = 0; i < 5; i++) {
     let length = i + 1;
     let orientation1 = Math.random() < 0.5 ? "horizontal" : "vertical";
@@ -254,20 +224,21 @@ function gameloop() {
       )
     );
     gameboardTwo.placeShip(row1, col1, length, isVertical1);
-    
-    console.table(gameboardTwo.board);
   }
       
     gameboardOneArr.push(gameboardOne);
     gameboardTwoArr.push(gameboardTwo);
     playersName.push(playerOne, playerTwo);
+    const gridItemTwo = document.querySelectorAll(".grid-item-grid2");
+    gridItemTwo.forEach(item => {
+      item.addEventListener("click", turn);
+    })
 
   return {
     playerOne,
     playerTwo,
     gameboardOne,
     gameboardTwo,
-    //winner,
   };
 }
 

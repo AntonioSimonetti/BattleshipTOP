@@ -1,15 +1,9 @@
-const { gameloop, getPlayerInput, turn } = require("./gameloop");
+const { getPlayerInput } = require("./gameloop");
 
 
 function createGrid() {
   const topContainer = document.createElement("div");
   topContainer.classList.add("top-container");
-
-  //const startButton = document.createElement("startButton");
-  //startButton.classList.add("startButton");
-  //startButton.textContent = "START";
-
-  //topContainer.appendChild(startButton);
   document.body.appendChild(topContainer)
 
   const mainHeader = document.createElement("div");
@@ -39,8 +33,6 @@ function createGrid() {
 
       // Add click event listener to each grid item
       gridItemOne.addEventListener("click", getPlayerInput);
-
-
     }
   }
 
@@ -57,14 +49,26 @@ function createGrid() {
       gridItemTwo.setAttribute("data-row", i);
       gridItemTwo.setAttribute("data-col", j);
       grid2Container.appendChild(gridItemTwo);
-
-      // Add click event listener to each grid item
-      gridItemTwo.addEventListener("click", turn);
-
     }
   }
+  
+  //Create the divs with player's name
+  const nameDiv = document.createElement("div");
+  nameDiv.classList.add("nameDiv");
+  document.body.appendChild(nameDiv);
+  const leftName = document.createElement("div");
+  leftName.classList.add("leftName");
+  const leftNameTxt = document.createElement("div");
+  leftNameTxt.textContent = "Player One";
+  leftName.appendChild(leftNameTxt);
+  nameDiv.appendChild(leftName);
+  const rightName = document.createElement("div");
+  const rightNameTxt = document.createElement("div");
+  rightName.classList.add("rightName");
+  rightNameTxt.textContent = "Player Two";
+  rightName.appendChild(rightNameTxt);
+  nameDiv.appendChild(rightName);
 }
-
 
 module.exports = {
   createGrid: createGrid,

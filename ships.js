@@ -16,7 +16,6 @@ module.exports = {  Ship };
     
   
     function isSunk() {
-      //console.log(`isSunk: ${JSON.stringify(hits)}`);
       return hits.every(hit => hit === true);
     }
   
