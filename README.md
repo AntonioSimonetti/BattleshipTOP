@@ -8,11 +8,11 @@ A live version of the project can be accessed here: https://antoniosimonetti.git
 
 **Benefits**
 
-The main benefit of working on this project was that introduced me into TDD and into Jest.
+The main benefit of working on this project was that it introduced me to TDD and Jest.
 
 **Features**
 
-The game allows users to play a battleship game, placing five ships vertically or horizontally and to attack the enemy grid.
+The game allows users to play a game of battleship by placing five ships vertically or horizontally and attacking the enemy grid.
 
 The following technologies were used to build this app:
 
