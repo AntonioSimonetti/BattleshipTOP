@@ -16,10 +16,10 @@ The game allows users to play a battleship game, placing five ships vertically o
 
 The following technologies were used to build this app:
 
-**HTML
-CSS
-JavaScript
-Jest
-Webpack**
+**HTML<br>
+CSS<br>
+JavaScript<br>
+Jest<br>
+Webpack**<br>
 
 Credits The design and layout of the app were inspired by: https://dribbble.com/search/battleship
